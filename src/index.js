@@ -1,6 +1,18 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: './env' }); // Make sure this points to the correct .env file location
+import connectDB from './db/connect.js';
+import { PORT } from './constants.js';
+import express from 'express'
 
-import connectDB from './db/connect.js'; // Ensure correct path and .js extension
+const app = express()
 
-connectDB();
+dotenv.config({ path: './env' });
+
+connectDB()
+.then(()=> {
+    app.listen(PORT || 8000, () => {
+        console.log(`server is running at port : ${PORT}`)
+    })
+})
+.catch((err) => {
+    console.log(`db connection failed ${err}`)
+})
