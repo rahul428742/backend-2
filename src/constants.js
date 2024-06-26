@@ -1,2 +1,2 @@
-export const DB_NAME = "test-chai";
+export const DB_NAME = "Youtube";
 export const PORT = process.env.PORT

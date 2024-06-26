@@ -1,5 +1,6 @@
 import {v2 as cloudinary} from "cloudinary"
 import fs from "fs"
+import { upload } from "../middlewares/multer.middleware.js";
 
 cloudinary.config({
     cloud_name : process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,7 +18,8 @@ const uploadOnCloudinary = async (localFilePath) => {
         })
         // file has been uploaded successfull 
         console.log("file is uploaded on cloudinary ", response.url);
-        return response;    
+        fs.unlinkSync(localFilePath);
+        return response; 
     } catch (error) {
         fs.unlinkSync(localFilePath) //remove the locally saved temporary file as the upload operation got failed
         return null
